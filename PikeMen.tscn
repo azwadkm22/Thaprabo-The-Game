@@ -1,0 +1,90 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://enemy.png" type="Texture" id=1]
+[ext_resource path="res://PikeMen.gd" type="Script" id=2]
+[ext_resource path="res://EnemyHealthBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Enemy/Pike.png" type="Texture" id=4]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 6.09159
+height = 15.3034
+
+[sub_resource type="Animation" id=2]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 2 ]
+}
+
+[sub_resource type="RayShape2D" id=5]
+length = 13.9936
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 16
+collision_mask = 34
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.819608, 0.117647, 0.298039, 1 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 1 )
+hframes = 5
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Dead = SubResource( 2 )
+anims/Walk = SubResource( 3 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 5.01785, 2.40308 )
+enabled = true
+cast_to = Vector2( 0, 12 )
+collision_mask = 2
+
+[node name="EnemyHealthBar" parent="." instance=ExtResource( 3 )]
+margin_left = -18.6275
+margin_top = -24.604
+margin_right = -18.6275
+margin_bottom = -24.604
+
+[node name="PikeArea" type="Area2D" parent="."]
+
+[node name="Pike" type="CollisionShape2D" parent="PikeArea"]
+position = Vector2( -0.481123, 1.21495 )
+rotation = 1.5708
+scale = Vector2( 0.6, 2 )
+shape = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="PikeArea"]
+position = Vector2( -18.4393, 0.879368 )
+scale = Vector2( 1.50087, 1.61872 )
+texture = ExtResource( 4 )
+flip_h = true
+
+[connection signal="body_entered" from="PikeArea" to="." method="_on_PikeArea_body_entered"]

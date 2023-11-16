@@ -1,0 +1,68 @@
+extends KinematicBody2D
+
+
+const UP = Vector2(0, -1)
+const GRAVITY = 10
+const MAXFALLSPEED = 200
+const MAXSPEED = 20
+const JUMPFORCE = 250
+const ACCELARATION = 13
+const MAXHEALTH = 10
+
+
+var motion = Vector2()
+var facingRight = 1
+var is_dead = false
+
+var currentHealth = MAXHEALTH
+#var sprite = $Sprite
+
+func _ready():
+	$EnemyHealthBar._on_max_health_updated(MAXHEALTH)
+	pass
+
+func hit(damage):
+	currentHealth = currentHealth - damage
+	if currentHealth <= 0:
+		dead()
+	
+func dead():
+	is_dead = true
+	queue_free()
+	motion
+	$AnimationPlayer.play("Dead")
+	$CollisionShape2D.call_deferred("set_disabled", true)
+	$RayCast2D.enabled = false
+	$EnemyHealthBar.visible = false
+	
+	
+func _physics_process(delta):
+	$EnemyHealthBar._on_health_updated(currentHealth)
+	if is_dead==false:
+		motion.x = MAXSPEED * facingRight
+		$AnimationPlayer.play("Walk")
+		motion.y += GRAVITY
+		if motion.y > MAXFALLSPEED:
+			motion.y = MAXFALLSPEED
+		motion = move_and_slide(motion, UP)
+		
+		if is_on_floor():
+			motion.y -= JUMPFORCE
+			
+		if facingRight == 1:
+			$Sprite.flip_h = false
+		else:
+			$Sprite.flip_h = true
+
+		if is_on_wall():
+			facingRight *= -1
+			$RayCast2D.position.x *= -1
+			
+		#if $RayCast2D.is_colliding() == false:
+		#	$RayCast2D.position.x *= -1
+		#	facingRight *= -1
+		
+		if get_slide_count() > 0:
+			for i in range(get_slide_count()):
+				if "Player" in get_slide_collision(i).collider.name:
+					get_slide_collision(i).collider.hit(20)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Blockade.png" type="Texture" id=1]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 11.0054
+height = 27.0816
+
+[node name="Blockade" type="Area2D"]
+collision_layer = 63
+collision_mask = 59
+
+[node name="Area2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.0992126, 0.198425 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )

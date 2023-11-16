@@ -1,0 +1,368 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://sprites.png" type="Texture" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://slapEffect.png" type="Texture" id=3]
+[ext_resource path="res://Slap.gd" type="Script" id=4]
+[ext_resource path="res://enraged2.png" type="Texture" id=5]
+[ext_resource path="res://enraged1.png" type="Texture" id=6]
+[ext_resource path="res://PlayerHealthBar.tscn" type="PackedScene" id=7]
+[ext_resource path="res://HUD.gd" type="Script" id=8]
+[ext_resource path="res://Fonts/Comfortaa.ttf" type="DynamicFontData" id=9]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.06891
+height = 10.8666
+
+[sub_resource type="Animation" id=2]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Hit"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Invulnerable"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 8 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 2 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 4, 6, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Slap/SlapHitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "slap_effect"
+}, {
+"args": [  ],
+"method": "attack_done"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Slap/SlapEffect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Invulnerable"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Rest"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 5.34845, 2.84925 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "New Anim",
+"speed": 3.0
+} ]
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0, 0, 0, 0.121569 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="DynamicFont" id=15]
+size = 20
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 20
+font_data = ExtResource( 9 )
+
+[node name="Player" type="KinematicBody2D"]
+light_mask = 0
+collision_mask = 31
+script = ExtResource( 2 )
+
+[node name="PlayerHealthBar" parent="." instance=ExtResource( 7 )]
+margin_left = -18.538
+margin_top = -21.5004
+margin_right = 29.462
+margin_bottom = -10.5004
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -1, 0 )
+texture = ExtResource( 1 )
+hframes = 10
+frame = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 3
+position = Vector2( -0.25029, 1.24237 )
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( -1.78699, 1.4743 )
+current = true
+zoom = Vector2( 0.28, 0.25 )
+smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Falling = SubResource( 2 )
+anims/Hit = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/Invulnerable = SubResource( 5 )
+anims/Jumping = SubResource( 6 )
+anims/Running = SubResource( 7 )
+anims/Slap = SubResource( 8 )
+
+[node name="EffectsAnimation" type="AnimationPlayer" parent="."]
+anims/Flash = SubResource( 9 )
+anims/Invulnerable = SubResource( 10 )
+anims/Rest = SubResource( 11 )
+
+[node name="Slap" type="Area2D" parent="."]
+collision_layer = 32
+script = ExtResource( 4 )
+
+[node name="SlapHitbox" type="CollisionShape2D" parent="Slap"]
+position = Vector2( 10.27, -1.589 )
+shape = SubResource( 12 )
+disabled = true
+
+[node name="SlapEffect" type="Sprite" parent="Slap"]
+position = Vector2( 10.9697, -1.63448 )
+scale = Vector2( 0.436933, 0.540648 )
+texture = ExtResource( 3 )
+
+[node name="Enraged" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( -0.0441972, -3.87268 )
+scale = Vector2( 0.900125, 1.07997 )
+frames = SubResource( 13 )
+animation = "New Anim"
+frame = 1
+playing = true
+
+[node name="EnragedTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="DeadTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource( 8 )
+
+[node name="Panel" type="Panel" parent="HUD"]
+margin_left = 30.0
+margin_top = 41.0
+margin_right = 163.0
+margin_bottom = 81.0
+custom_styles/panel = SubResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD"]
+margin_left = 38.5576
+margin_top = 49.0
+margin_right = 108.558
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_color = Color( 0.921569, 0.658824, 0.0196078, 1 )
+text = "Coins: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coins" type="Label" parent="HUD"]
+margin_left = 110.959
+margin_top = 50.0
+margin_right = 167.959
+margin_bottom = 82.0
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color = Color( 0.921569, 0.658824, 0.0196078, 1 )
+text = "##"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="body_entered" from="Slap" to="Slap" method="_on_Slap_body_entered"]
+[connection signal="timeout" from="EnragedTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="DeadTimer" to="." method="_on_DeadTimer_timeout"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_EffectTimer_timeout"]
