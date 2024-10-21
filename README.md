@@ -1,0 +1,2 @@
+# Thaprabo The Game
+Thaprabo the Game is a 2D platformer I created as a surprise for a friend\'s birthday in 2021, using the Godot Engine for its simplicity and accessibility.The game features multiple levels, a variety of enemies, and mechanics inspired by Hollow Knight, blending challenge with engaging gameplay.This project gave me the opportunity to explore Godot\'s powerful scripting language (GDScript), hone my level design skills, and refine my understanding of game mechanics and interactive storytelling.
